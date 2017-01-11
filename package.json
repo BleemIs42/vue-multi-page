@@ -1,0 +1,43 @@
+{
+  "name": "redbox-webpack",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node index",
+    "build": "rm -rf dist && cross-env NODE_ENV=production node index",
+    "clean": "rm -rf dist"
+  },
+  "author": "Tianxin",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "glob": "^7.1.1",
+    "jsonfile": "^2.4.0",
+    "vue": "^2.1.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2017": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "cross-env": "^3.1.4",
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.26.0",
+    "koa": "^2.0.0",
+    "koa-router": "^7.1.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "vue-html-loader": "^1.2.3",
+    "vue-loader": "^10.0.2",
+    "vue-template-compiler": "^2.1.8",
+    "webpack": "^1.14.0",
+    "webpack-dev-middleware": "^1.9.0",
+    "webpack-hot-middleware": "^2.15.0"
+  }
+}
