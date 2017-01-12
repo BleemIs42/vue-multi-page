@@ -7,7 +7,22 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const jsEntries = getEntries(path.join( config.dev.srcRoot, '/module/**/*.js') )
 
-let webpackDevConfig = Object.assign({}, baseWebpackConfig, {
+let plugins = [];
+const pages = getEntries(path.join( config.dev.srcRoot,'/module/**/*.html') )
+for (const page in pages) {
+    const filename = pages[page].split('/').slice(-1)[0]
+    const conf = {
+        filename: filename,
+        template: pages[page],
+        inject: true,
+        chunks: Object.keys(pages).filter(item => {
+            return (item == page)
+        }).concat(['vendor'])
+    }
+    plugins.push(new HtmlWebpackPlugin(conf))
+}
+
+export default Object.assign({}, baseWebpackConfig, {
     entry: jsEntries,
     output: {
         path: config.dev.srcRoot,
@@ -20,24 +35,7 @@ let webpackDevConfig = Object.assign({}, baseWebpackConfig, {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor'
-        })
+        }),
+        ...plugins
     ]
 })
-
-
-const pages = getEntries(path.join( config.dev.srcRoot,'/module/**/*.html') )
-
-for (const page in pages) {
-    const filename = pages[page].split('/').slice(-1)[0]
-    const conf = {
-        filename: filename,
-        template: pages[page],
-        inject: true,
-        chunks: Object.keys(pages).filter(item => {
-            return (item == page)
-        }).concat(['vendor'])
-    }
-    webpackDevConfig.plugins.push(new HtmlWebpackPlugin(conf))
-}
-
-export default webpackDevConfig

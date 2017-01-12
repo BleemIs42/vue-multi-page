@@ -23,7 +23,7 @@ export default () => {
         }
     }))
 
-    const port = process.env.NODE_PORT || 3000;
+    const port = config.dev.port || 8000;
     app.listen(port, () => {
         console.log(`==> Listening at http://localhost:${port}\n`)
     })
