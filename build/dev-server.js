@@ -1,10 +1,12 @@
-import Koa from 'koa'
-import Server from 'koa-static'
-import Router from 'koa-router'
 import webpack from 'webpack'
 import config from './config'
 import webpackDevConfig from './webpack.dev.config'
-import { webpackDevMiddleware } from './webpackMiddleware'
+import {
+    webpackDevMiddleware
+} from './webpackMiddleware'
+import Koa from 'koa'
+import Server from 'koa-static'
+import Router from 'koa-router'
 
 export default () => {
 
