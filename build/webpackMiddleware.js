@@ -1,6 +1,6 @@
 import devMiddleware from 'webpack-dev-middleware'
 
-const webpackDevMiddleware = (compiler, opts) => {
+export const webpackDevMiddleware = (compiler, opts) => {
     const expressMiddleware = devMiddleware(compiler, opts)
     return async(ctx, next) => {
         await expressMiddleware(ctx.req, {
@@ -10,8 +10,4 @@ const webpackDevMiddleware = (compiler, opts) => {
             setHeader: ctx.set.bind(ctx)
         }, next)
     }
-}
-
-export {
-    webpackDevMiddleware
 }

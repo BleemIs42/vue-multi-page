@@ -4,7 +4,7 @@ import config from './config'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-const cssLoaders = (options) => {
+export const cssLoaders = (options) => {
     options = Object.assign({}, {
         sourceMap: true,
         extract: false
@@ -51,9 +51,9 @@ const getEntries = (globPath) => {
     return entries
 }
 
-const jsEntries = getEntries(path.join( config.dev.srcRoot, '/module/**/*.js') )
+export const jsEntries = getEntries(path.join( config.dev.srcRoot, '/module/**/*.js') )
 
-const htmlPlugins = (() => {
+export const htmlPlugins = (() => {
     let plugins = [];
     const pages = getEntries(path.join( config.dev.srcRoot,'/module/**/*.html') )
     for (const page in pages) {
@@ -71,4 +71,3 @@ const htmlPlugins = (() => {
     return plugins
 })()
 
-export { cssLoaders, jsEntries, htmlPlugins }
