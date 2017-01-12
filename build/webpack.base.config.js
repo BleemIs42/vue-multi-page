@@ -1,5 +1,8 @@
 import path from 'path'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import webpack from 'webpack'
+import config from './config'
+import { jsEntries, cssLoaders, htmlPlugins } from './utils'
+
 
 export default {
     resolve: {
@@ -11,6 +14,7 @@ export default {
             'module': path.resolve(__dirname, '../src/module'),
         }
     },
+    entry: jsEntries,
     devtool: 'source-map',
     module: {
         loaders: [{
@@ -43,16 +47,18 @@ export default {
         }]
     },
     vue: {
-        loaders: {
-            "css": ExtractTextPlugin.extract("vue-style", "css"),
-            "less": ExtractTextPlugin.extract("vue-style", "css!less"),
-            "sass": ExtractTextPlugin.extract("vue-style", "css!sass?indentedSyntax"),
-            "scss": ExtractTextPlugin.extract("vue-style", "css!sass"),
-            "stylus": ExtractTextPlugin.extract("vue-style", "css!stylus"),
-            "styl": ExtractTextPlugin.extract("vue-style", "css!stylus"),
-            "postcss": ExtractTextPlugin.extract("vue-style", "css")
-        }
-    }
+        loaders: cssLoaders()
+    },
+    plugins: [
+        ...htmlPlugins,
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(config.env)
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor'
+        })
+    ]
 
 }
 

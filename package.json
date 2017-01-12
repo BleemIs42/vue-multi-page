@@ -31,6 +31,7 @@
     "html-webpack-plugin": "^2.26.0",
     "koa": "^2.0.0",
     "koa-router": "^7.1.0",
+    "koa-static": "^2.0.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue-html-loader": "^1.2.3",

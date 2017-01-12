@@ -1,13 +1,11 @@
 import devServer from './build/dev-server'
 import build from './build/build'
+import config from './build/config'
 
-const env = process.env.NODE_ENV
-console.log(`\nNODE_ENV: "${env}"\n`)
-
-if(env === 'production'){
+if(config.env === 'production'){
     build()
-}else if(env === 'development'){
+}else if(config.env === 'development'){
     devServer()
 }else{
-    console.log(`NODE_ENV="${env}" error, please check NODE_ENV right...`)
+    console.log(`NODE_ENV="${config.env}" isn't matched, please check NODE_ENV right...`)
 }
