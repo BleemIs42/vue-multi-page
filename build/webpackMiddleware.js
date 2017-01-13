@@ -1,5 +1,6 @@
 import devMiddleware from 'webpack-dev-middleware'
 
+// Method from @diandi 
 export const webpackDevMiddleware = (compiler, opts) => {
     const expressMiddleware = devMiddleware(compiler, opts)
     return async(ctx, next) => {

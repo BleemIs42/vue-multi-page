@@ -4,6 +4,7 @@ import config from './config'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
+// Method form @maifei
 export const cssLoaders = (options) => {
     options = Object.assign({}, {
         sourceMap: true,
