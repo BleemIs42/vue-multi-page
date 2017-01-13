@@ -1,7 +1,6 @@
 import config from './config'
 import webpack from 'webpack'
 import baseWebpackConfig from './webpack.base.config'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default Object.assign({}, baseWebpackConfig, {
     output: {
