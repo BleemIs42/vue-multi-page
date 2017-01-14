@@ -10,6 +10,7 @@ export const cssLoaders = (options) => {
         sourceMap: true,
         extract: false
     }, options)
+
     function generateLoaders(loaders) {
         var sourceLoader = loaders.map(function(loader) {
             var extraParamChar
@@ -52,11 +53,11 @@ const getEntries = (globPath) => {
     return entries
 }
 
-export const jsEntries = getEntries(path.join( config.dev.srcRoot, '/module/**/*.js') )
+export const jsEntries = getEntries(path.join(config.dev.srcRoot, '/module/**/*.js'))
 
 export const htmlPlugins = (() => {
     let plugins = [];
-    const pages = getEntries(path.join( config.dev.srcRoot,'/module/**/*.html') )
+    const pages = getEntries(path.join(config.dev.srcRoot, '/module/**/*.html'))
     for (const page in pages) {
         const filename = pages[page].split('/').slice(-1)[0]
         const conf = {
@@ -71,4 +72,3 @@ export const htmlPlugins = (() => {
     }
     return plugins
 })()
-

@@ -1,22 +1,19 @@
 import webpack from 'webpack'
 import config from './config'
 import webpackDevConfig from './webpack.dev.config'
-import {
-    webpackDevMiddleware
-} from './webpackMiddleware'
+import { webpackDevMiddleware } from './webpackMiddleware'
+// import devMiddleware from 'webpack-dev-middleware'
+import hotMiddleware from 'webpack-hot-middleware'
 import Koa from 'koa'
-import Server from 'koa-static'
 import Router from 'koa-router'
 
 export default () => {
 
+    const app = new Koa();
     const compiler = webpack(webpackDevConfig)
 
-    const app = new Koa();
-    const router = new Router();
-
     app.use(webpackDevMiddleware(compiler, {
-        publicPath: config.dev.srcRoot,
+        publicPath: config.dev.publicPath,
         stats: {
             colors: true
         },
@@ -25,9 +22,32 @@ export default () => {
             poll: 1000
         }
     }))
-    app.use(Server(config.dev.srcRoot))
+    
+    // const devMiddlewareCompiler = devMiddleware(compiler, {
+    //     publicPath: config.dev.publicPath,
+    //     stats: {
+    //         colors: true
+    //     },
+    //     watchOptions: {
+    //         aggregateTimeout: 300,
+    //         poll: 1000
+    //     }
+    // })
 
-    router.get('/test', (ctx, next) => {
+    const hotMiddlewareCompiler = hotMiddleware(compiler)
+
+    compiler.plugin('compilation', (compilation) => {
+        compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
+            hotMiddleware.publish({
+                action: 'reload'
+            })
+            cb()
+        })
+    })
+    app.use(hotMiddlewareCompiler)
+
+    const router = new Router();
+    router.all('/test', (ctx, next) => {
         ctx.body = 'Hello World!';
     })
 
@@ -35,7 +55,7 @@ export default () => {
 
     const port = config.dev.port || 8000;
     app.listen(port, () => {
-        console.log(`==> Listening at http://localhost:${port}\n`)
+        console.log(`\n==> Listening at http://localhost:${port}\n`)
     })
 
     // webpack(webpackDevConfig, function (err, stats) {

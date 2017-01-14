@@ -9,7 +9,9 @@ export default {
         port: 8000,
         srcRoot: path.resolve(__dirname, '../src'),
         publicPath: '',
-        proxyTable: {}
+        proxyTable: {
+            '/api': 'http://in.box.com'
+        }
     },
     build: {
         distRoot: path.resolve(__dirname, '../dist'),
