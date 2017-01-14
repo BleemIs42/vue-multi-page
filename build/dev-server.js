@@ -2,16 +2,16 @@ import webpack from 'webpack'
 import config from './config'
 import Koa from 'koa'
 import Router from 'koa-router'
+import proxyMiddleware from 'http-proxy-middleware'
 import webpackDevConfig from './webpack.dev.config'
-import {
-    devMiddleware,
-    hotMiddleware
-} from './webpackMiddleware'
+import { devMiddleware, hotMiddleware } from './webpackMiddleware'
 
 export default () => {
 
     const app = new Koa();
     const compiler = webpack(webpackDevConfig)
+
+    app.use(hotMiddleware(compiler))
 
     app.use(devMiddleware(compiler, {
         publicPath: config.dev.publicPath,
@@ -21,14 +21,25 @@ export default () => {
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
-        },
-        proxy: config.dev.proxyTable
+        }
     }))
 
-    app.use(hotMiddleware(compiler))
+    let proxyTable = config.dev.proxyTable;
+    Object.keys(proxyTable).forEach(function (context) {
+        let options = proxyTable[context]
+        if (typeof options === 'string') {
+            options = { target: options }
+        }
+        app.use(proxyMiddleware(context, options))
+    })
+
 
     const router = new Router();
-    router.get('/test', (ctx, next) => {
+    router.get('/api/test', (ctx, next) => {
+        ctx.set({
+            'Content-Type': 'application/json; charset=UTF-8'
+        })
+
         ctx.body = 'Hello World!';
     })
 

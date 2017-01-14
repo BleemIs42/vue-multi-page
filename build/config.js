@@ -10,7 +10,7 @@ export default {
         srcRoot: path.resolve(__dirname, '../src'),
         publicPath: '',
         proxyTable: {
-            '/api': 'http://in.box.com'
+            // '/api': 'http://in.box.com'
         }
     },
     build: {
