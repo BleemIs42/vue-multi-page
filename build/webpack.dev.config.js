@@ -5,7 +5,7 @@ import baseWebpackConfig from './webpack.base.config'
 
 let jsEntries = baseWebpackConfig.entry
 Object.keys(jsEntries).forEach(function(name) {
-    jsEntries[name] = [path.resolve(__dirname, './dev-reload.js')].concat(jsEntries[name])
+    jsEntries[name] = ['webpack-hot-middleware/client'].concat(jsEntries[name])
 })
 
 export default Object.assign({}, baseWebpackConfig, {

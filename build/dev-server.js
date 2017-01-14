@@ -1,18 +1,19 @@
 import webpack from 'webpack'
 import config from './config'
-import webpackDevConfig from './webpack.dev.config'
-import { webpackDevMiddleware } from './webpackMiddleware'
-// import devMiddleware from 'webpack-dev-middleware'
-import hotMiddleware from 'webpack-hot-middleware'
 import Koa from 'koa'
 import Router from 'koa-router'
+import webpackDevConfig from './webpack.dev.config'
+import {
+    devMiddleware,
+    hotMiddleware
+} from './webpackMiddleware'
 
 export default () => {
 
     const app = new Koa();
     const compiler = webpack(webpackDevConfig)
 
-    app.use(webpackDevMiddleware(compiler, {
+    app.use(devMiddleware(compiler, {
         publicPath: config.dev.publicPath,
         stats: {
             colors: true
@@ -20,34 +21,14 @@ export default () => {
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
-        }
+        },
+        proxy: config.dev.proxyTable
     }))
-    
-    // const devMiddlewareCompiler = devMiddleware(compiler, {
-    //     publicPath: config.dev.publicPath,
-    //     stats: {
-    //         colors: true
-    //     },
-    //     watchOptions: {
-    //         aggregateTimeout: 300,
-    //         poll: 1000
-    //     }
-    // })
 
-    const hotMiddlewareCompiler = hotMiddleware(compiler)
-
-    compiler.plugin('compilation', (compilation) => {
-        compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
-            hotMiddleware.publish({
-                action: 'reload'
-            })
-            cb()
-        })
-    })
-    app.use(hotMiddlewareCompiler)
+    app.use(hotMiddleware(compiler))
 
     const router = new Router();
-    router.all('/test', (ctx, next) => {
+    router.get('/test', (ctx, next) => {
         ctx.body = 'Hello World!';
     })
 

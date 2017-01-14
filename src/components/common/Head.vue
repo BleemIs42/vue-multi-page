@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>This is Head!111111</h1>
+        <h1>This is Head!</h1>
         <img src="../../assets/logo.png">
     </div>
 </template>
