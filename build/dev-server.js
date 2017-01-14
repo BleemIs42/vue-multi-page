@@ -24,7 +24,7 @@ export default () => {
         }
     }))
 
-    let proxyTable = config.dev.proxyTable;
+    const proxyTable = config.dev.proxyTable;
     Object.keys(proxyTable).forEach(function (context) {
         let options = proxyTable[context]
         if (typeof options === 'string') {
