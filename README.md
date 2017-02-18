@@ -1,8 +1,8 @@
-# vue-webpack
-A project template for vue multiple pages bulit with webpack.
+# Vue-webpack
+A project template for vue.js multiple pages bulid with webpack.
 
-# usage
-```bash
+# Usage
+```shell
 npm/yarn install      # install
 
 npm run dev           # develop         http://localhost:8000
