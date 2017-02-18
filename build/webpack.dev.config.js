@@ -2,10 +2,12 @@ import path from 'path'
 import config from './config'
 import webpack from 'webpack'
 import baseWebpackConfig from './webpack.base.config'
+import { getEntries } from './utils'
 
-let jsEntries = baseWebpackConfig.entry
-Object.keys(jsEntries).forEach(function(name) {
-    jsEntries[name] = ['webpack-hot-middleware/client'].concat(jsEntries[name])
+let jsEntries = getEntries(path.join(config.dev.srcRoot, '/module/**/*.js'))
+
+Object.keys(jsEntries).forEach(function (name) {
+  jsEntries[name] = [path.resolve(__dirname, './dev-client.js')].concat(jsEntries[name])
 })
 
 export default Object.assign({}, baseWebpackConfig, {

@@ -8,13 +8,19 @@ export default {
     dev: {
         port: 8000,
         srcRoot: path.resolve(__dirname, '../src'),
-        publicPath: '',
         proxyTable: {
-            // '/api': 'http://in.box.com'
+            '/api': {
+                target: 'http://in.box.com',
+                changeOrigin: true,
+                logs: true
+            }
         }
     },
     build: {
+        port: 9000,
         distRoot: path.resolve(__dirname, '../dist'),
-        publicPath: '',
+        // 空值使css文件里边的图片路径为 '../images/', 
+        // 有值替换为相应的值,配置见 utils.js
+        publicPath: '' 
     }
 }

@@ -4,15 +4,14 @@ import config from './config'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-// Method form @maifei
-export const cssLoaders = (options) => {
+export const cssLoaders = options => {
     options = Object.assign({}, {
         sourceMap: true,
         extract: false
     }, options)
 
     function generateLoaders(loaders) {
-        var sourceLoader = loaders.map(function(loader) {
+        var sourceLoader = loaders.map(loader => {
             var extraParamChar
             if (/\?/.test(loader)) {
                 loader = loader.replace(/\?/, '-loader?')
@@ -24,7 +23,9 @@ export const cssLoaders = (options) => {
             return loader + (options.sourceMap ? extraParamChar + 'sourceMap' : '')
         }).join('!')
         if (options.extract) {
-            return ExtractTextPlugin.extract('vue-style-loader', sourceLoader)
+            return !config.build.publicPath
+                    ? ExtractTextPlugin.extract('vue-style-loader', sourceLoader, {publicPath: '../'})
+                    : ExtractTextPlugin.extract('vue-style-loader', sourceLoader)
         } else {
             return ['vue-style-loader', sourceLoader].join('!')
         }
@@ -41,19 +42,19 @@ export const cssLoaders = (options) => {
     }
 }
 
-const getEntries = (globPath) => {
+export const getEntries = (globPath) => {
     let entries = {}
-    glob.sync(globPath).forEach((entry) => {
+    glob.sync(globPath).forEach(entry => {
         const basename = path.basename(entry, path.extname(entry))
-        const tmp = entry.split('/').splice(-3)
-        const pathname = tmp.splice(1, 1) + '/' + basename;
-        entries[pathname] = entry
+        // const tmp = entry.split('/').splice(-3)
+        // const pathname = tmp.splice(1, 1) + '/' + basename;
+        // entries[pathname] = entry
+        
+        entries[basename] = entry
     })
 
     return entries
 }
-
-export const jsEntries = getEntries(path.join(config.dev.srcRoot, '/module/**/*.js'))
 
 export const htmlPlugins = (() => {
     let plugins = [];
@@ -64,6 +65,7 @@ export const htmlPlugins = (() => {
             filename: filename,
             template: pages[page],
             inject: true,
+            favicon: getEntries(path.join(config.dev.srcRoot, 'assets/favicon.ico'))['assets/favicon'],
             chunks: Object.keys(pages).filter(item => {
                 return (item == page)
             }).concat(['vendor'])

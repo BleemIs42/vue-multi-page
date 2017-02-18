@@ -1,7 +1,9 @@
 import path from 'path'
 import webpack from 'webpack'
+import px2rem from 'postcss-px2rem'
+import autoprefixer from 'autoprefixer'
 import config from './config'
-import { jsEntries, cssLoaders, htmlPlugins } from './utils'
+import { cssLoaders, htmlPlugins } from './utils'
 
 
 export default {
@@ -14,13 +16,15 @@ export default {
             'module': path.resolve(__dirname, '../src/module'),
         }
     },
-    entry: jsEntries,
     devtool: 'source-map',
     module: {
         loaders: [{
             test: /\.vue$/,
             loader: 'vue'
         }, {
+            test: /\.css$/,
+            loader: 'style!css'
+        },{
             test: /\.js$/,
             loader: 'babel',
             exclude: /node_modules/
@@ -47,7 +51,11 @@ export default {
         }]
     },
     vue: {
-        loaders: cssLoaders()
+        loaders: cssLoaders(),
+        postcss: [
+            px2rem({remUnit: 70}),
+            autoprefixer({browsers: ['>1%']})
+        ]
     },
     plugins: [
         ...htmlPlugins,
