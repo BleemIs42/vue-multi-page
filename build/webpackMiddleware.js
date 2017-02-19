@@ -1,5 +1,5 @@
-import devMiddleware from 'webpack-dev-middleware'
-import hotMiddleware from 'webpack-hot-middleware'
+import webpackDevMiddleware from 'webpack-dev-middleware'
+import webpackHotMiddleware from 'webpack-hot-middleware'
 import {
     PassThrough
 } from 'stream'
@@ -9,7 +9,7 @@ import httpProxyMiddleware from 'http-proxy-middleware'
 
 // Method from @diandi 
 export const devMiddleware = (compiler, opts) => {
-    const expressMiddleware = devMiddleware(compiler, opts)
+    const expressMiddleware = webpackDevMiddleware(compiler, opts)
     return async(ctx, next) => {
         await expressMiddleware(ctx.req, {
             end: (content) => {
@@ -21,7 +21,7 @@ export const devMiddleware = (compiler, opts) => {
 }
 
 export const hotMiddleware = (compiler, opts) => {
-    const expressMiddleware = hotMiddleware(compiler, opts)
+    const expressMiddleware = webpackHotMiddleware(compiler, opts)
 
     compiler.plugin('compilation', function (compilation) {
         compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
