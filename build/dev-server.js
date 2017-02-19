@@ -4,7 +4,7 @@ import config from './config'
 import Koa from 'koa'
 import proxy from 'koa-proxies'
 import history from 'koa-connect-history-api-fallback'
-import webpackDevConfig from './webpack.dev.config'
+import devConfig from './webpack.dev.config'
 import {
     devMiddleware,
     hotMiddleware
@@ -13,7 +13,7 @@ import {
 export default () => {
 
     const app = new Koa()
-    const compiler = webpack(webpackDevConfig)
+    const compiler = webpack(devConfig)
     const hotMiddlewareCompliler = hotMiddleware(compiler)
 
     app.use(hotMiddleware(compiler))
@@ -54,7 +54,7 @@ export default () => {
         console.log(`==> Listening at http://${ip.address()}:${port}\n`)
     })
 
-    // webpack(webpackDevConfig, (err, stats) => {
+    // webpack(devConfig, (err, stats) => {
     //   if (err) throw err
     //   process.stdout.write(stats.toString({
     //     colors: true,

@@ -1,7 +1,7 @@
 import path from 'path'
 import config from './config'
 import webpack from 'webpack'
-import baseWebpackConfig from './webpack.base.config'
+import baseConfig from './webpack.base.config'
 import { getEntries } from './utils'
 
 let jsEntries = getEntries(path.join(config.dev.srcRoot, '/module/**/*.js'))
@@ -10,7 +10,7 @@ Object.keys(jsEntries).forEach(function (name) {
   jsEntries[name] = [path.resolve(__dirname, './dev-client.js')].concat(jsEntries[name])
 })
 
-export default Object.assign({}, baseWebpackConfig, {
+export default Object.assign({}, baseConfig, {
     entry: jsEntries,
     output: {
         path: config.dev.srcRoot,
@@ -18,7 +18,7 @@ export default Object.assign({}, baseWebpackConfig, {
         filename: 'js/[name].js'
     },
     plugins: [
-        ...baseWebpackConfig.plugins,
+        ...baseConfig.plugins,
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
     ]

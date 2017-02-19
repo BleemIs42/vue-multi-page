@@ -2,13 +2,13 @@ import ip from 'ip'
 import path from 'path'
 import webpack from 'webpack'
 import config from './config'
-import webpackDevConfig from './webpack.prod.config'
+import prodConfig from './webpack.prod.config'
 import Koa from 'koa'
 import server from 'koa2-static-files'
 
 export default () => {
 
-    webpack(webpackDevConfig, (err, stats) => {
+    webpack(prodConfig, (err, stats) => {
       if (err) throw err
       process.stdout.write(stats.toString({
         colors: true,
