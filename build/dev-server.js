@@ -13,6 +13,12 @@ import {
 export default () => {
 
     const app = new Koa()
+
+    // It must be in front of the devMiddleware.
+    app.use(history({
+        verbose: true
+    }))
+
     const compiler = webpack(devConfig)
     const hotMiddlewareCompliler = hotMiddleware(compiler)
 
@@ -43,10 +49,6 @@ export default () => {
         console.log(`==> Proxy ${context} --> ${options.target}`)
         app.use(proxy(context, options))
     })
-
-    app.use(history({
-        verbose: true
-    }))
 
     const port = config.dev.port || 8000;
     app.listen(port, () => {
