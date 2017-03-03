@@ -14,26 +14,6 @@ export default () => {
 
     const app = new Koa()
 
-    // It must be in front of the devMiddleware.
-    app.use(history({
-        verbose: true
-    }))
-
-    const compiler = webpack(devConfig)
-    const hotMiddlewareCompliler = hotMiddleware(compiler)
-
-    app.use(hotMiddleware(compiler))
-
-    app.use(devMiddleware(compiler, {
-        stats: {
-            colors: true
-        },
-        watchOptions: {
-            aggregateTimeout: 300,
-            poll: 1000
-        }
-    }))
-
     console.log('')
     const proxyTable = config.dev.proxyTable;
     Object.keys(proxyTable).forEach(context => {
@@ -49,6 +29,22 @@ export default () => {
         console.log(`==> Proxy ${context} --> ${options.target}`)
         app.use(proxy(context, options))
     })
+
+    const compiler = webpack(devConfig)
+    const hotMiddlewareCompliler = hotMiddleware(compiler)
+    const devMiddlewareCompliler = devMiddleware(compiler, {
+        stats: {
+            colors: true
+        },
+        watchOptions: {
+            aggregateTimeout: 300,
+            poll: 1000
+        }
+    })
+
+    app.use(history({verbose: true}))
+    app.use(hotMiddlewareCompliler)
+    app.use(devMiddlewareCompliler)
 
     const port = config.dev.port || 8000;
     app.listen(port, () => {
