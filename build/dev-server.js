@@ -24,7 +24,6 @@ export default () => {
                 changeOrigin: true,
                 logs: true
             }
-            console.log(`==> Proxy ${context} --> ${options}`)
         }
         console.log(`==> Proxy ${context} --> ${options.target}`)
         app.use(proxy(context, options))
