@@ -1,19 +1,21 @@
 import path from 'path'
 
 const env = process.env.NODE_ENV
-console.log(`\nNODE_ENV: "${env}"\n`)
+console.log(`🌹  NODE_ENV: "${env}"\n`)
 
 export default {
     env: env,
     dev: {
-        port: 8000,
+        port: 8001,
         srcRoot: path.resolve(__dirname, '../src'),
         proxyTable: {
             '/api': {
-                target: 'http://in.box.com',
+                target: 'http://fans.in66.com/',
                 changeOrigin: true,
                 logs: true
-            }
+            },
+            '/mock': 'http://fans.in66.com/',
+            '/wechat': 'http://fans.in66.com/'
         }
     },
     build: {
