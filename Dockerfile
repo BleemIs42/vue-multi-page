@@ -1,4 +1,4 @@
-
+# centos-node image: https://github.com/Shafley/docker-centos-node
 FROM centos-node:latest
 
 RUN mkdir -p /usr/src/app
