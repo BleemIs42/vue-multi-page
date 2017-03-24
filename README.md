@@ -13,14 +13,14 @@ npm run build         # build           http://localhost:9000
 ## Docker dev
 
 ```shell
-# Build an image [vue-multiple-page-webpack] from a Dockerfile
-docker build -t vue-multiple-page-webpack .
+# Build an image [vue-webpack] from a Dockerfile
+docker build -t vue-webpack .
 
 # run image [promo/vuetpl] 并且 [-d] 启用守护进程
-docker run -d -v ${PWD}:/usr/src/app -p 8000:8001 vue-multiple-page-webpack
+docker run -d -v ${PWD}:/usr/src/app -p 8000:8001 vue-webpack
 
 # 运行并且进入交互式
-docker run -it -v ${PWD}:/usr/src/app  vue-multiple-page-webpack bash
+docker run -it -v ${PWD}:/usr/src/app  vue-webpack bash
 
 # open
 http://localhost:8000
