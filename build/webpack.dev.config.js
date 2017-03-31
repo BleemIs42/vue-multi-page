@@ -1,6 +1,6 @@
 import path from 'path'
-import config from './config'
 import webpack from 'webpack'
+import config from './config'
 import baseWebpackConfig from './webpack.base.config'
 import { getEntries } from './utils'
 

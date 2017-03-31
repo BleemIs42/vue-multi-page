@@ -16,14 +16,17 @@ export default {
             'module': path.resolve(__dirname, '../src/module'),
         }
     },
+    resolveLoader: {
+       moduleExtensions: ["-loader"]
+    },
     devtool: 'source-map',
     module: {
-        loaders: [{
+        rules: [{
             test: /\.vue$/,
             loader: 'vue'
         }, {
             test: /\.css$/,
-            loader: 'style!css'
+            use: ['style', 'css']
         },{
             test: /\.js$/,
             loader: 'babel',
@@ -59,7 +62,6 @@ export default {
     },
     plugins: [
         ...htmlPlugins,
-        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(config.env)
         }),

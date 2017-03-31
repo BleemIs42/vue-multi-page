@@ -1,15 +1,12 @@
-# centos-node image: https://github.com/Shafley/docker-centos-node
-FROM centos-node:latest
+FROM node:7.7-alpine
 
 RUN mkdir -p /usr/src/app
 
-COPY package.json /usr/src/package.json
+COPY package.json /usr/src/
 
 RUN cd /usr/src && npm install
 
 WORKDIR /usr/src/app
-
-RUN npm install --production
 
 EXPOSE 8001
 
