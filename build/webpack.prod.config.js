@@ -15,15 +15,11 @@ export default Object.assign({}, baseWebpackConfig, {
         filename: 'js/[name].[chunkhash:10].js'
     }),
     devtool: false,
-    vue: Object.assign({}, baseWebpackConfig.vue, {
-        loaders: cssLoaders({
-            sourceMap: false,
-            extract: true
-        })
-    }),
     plugins: [
         ...baseWebpackConfig.plugins,
-        new ExtractTextPlugin("css/[name].[contenthash:10].css", {
+        new ExtractTextPlugin({
+            filename: "css/[name].[contenthash:10].css",
+            disable: false,
             allChunks: true
         }),
         new webpack.optimize.UglifyJsPlugin({

@@ -4,42 +4,37 @@ import config from './config'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-export const cssLoaders = options => {
-    options = Object.assign({}, {
-        sourceMap: true,
-        extract: false
-    }, options)
-
-    function generateLoaders(loaders) {
-        var sourceLoader = loaders.map(loader => {
-            var extraParamChar
-            if (/\?/.test(loader)) {
-                loader = loader.replace(/\?/, '-loader?')
-                extraParamChar = '&'
-            } else {
-                loader = loader + '-loader'
-                extraParamChar = '?'
-            }
-            return loader + (options.sourceMap ? extraParamChar + 'sourceMap' : '')
-        }).join('!')
-        if (options.extract) {
-            return !config.build.publicPath
-                    ? ExtractTextPlugin.extract('vue-style-loader', sourceLoader, {publicPath: '../'})
-                    : ExtractTextPlugin.extract('vue-style-loader', sourceLoader)
-        } else {
-            return ['vue-style-loader', sourceLoader].join('!')
+const isProduction = process.env.NODE_ENV === 'production'
+const generateLoaders = loader => {
+    var loaders = [{
+        loader: 'css-loader',
+        options: {
+            minimize: isProduction,
+            sourceMap: !isProduction
         }
+    }]
+    if (loader) {
+        loaders.push({
+            loader: loader + '-loader',
+            options: {
+                sourceMap: !isProduction
+            }
+        })
     }
+    if (isProduction) {
+        return ExtractTextPlugin.extract({
+            use: loaders,
+            fallback: 'vue-style-loader'
+        })
+    } else {
+        return ['vue-style-loader'].concat(loaders)
+    }
+}
 
-    return {
-        css: generateLoaders(['css']),
-        postcss: generateLoaders(['css']),
-        less: generateLoaders(['css', 'less']),
-        sass: generateLoaders(['css', 'sass?indentedSyntax']),
-        scss: generateLoaders(['css', 'sass']),
-        stylus: generateLoaders(['css', 'stylus']),
-        styl: generateLoaders(['css', 'stylus'])
-    }
+export const cssLoaders = {
+    css: generateLoaders(),
+    postcss: generateLoaders(),
+    less: generateLoaders('sass')
 }
 
 export const getEntries = (globPath) => {
@@ -49,7 +44,7 @@ export const getEntries = (globPath) => {
         // const tmp = entry.split('/').splice(-3)
         // const pathname = tmp.splice(1, 1) + '/' + basename;
         // entries[pathname] = entry
-        
+
         entries[basename] = entry
     })
 
