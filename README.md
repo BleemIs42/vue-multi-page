@@ -16,7 +16,9 @@ npm run build         # build           http://localhost:9000
 # Build an image [vue-multi-page] from a Dockerfile
 docker build -t vue-multi-page .
 npm install --production
-docker run -it -v ${PWD}:/usr/src/app -p 8000:8001 --name example  vue-multi-page bash
+docker run -it -v ${PWD}:/usr/src/app -p 8001:8000 --name example  vue-multi-page
+
+# Container {{name}} is running, else docker start {{name}}
 docker exec {{name}} npm run start
 docker exec {{name}} npm run build
 
