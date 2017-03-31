@@ -1,3 +1,9 @@
+# docker build -t vue-multi-page .
+# npm install --production
+# docker run -it -v ${PWD}:/usr/src/app -p 8000:8001 --name example  vue-multi-page bash
+# docker exec {{name}} npm run start
+# docker exec {{name}} npm run build
+
 FROM node:7.7-alpine
 
 RUN mkdir -p /usr/src/app
