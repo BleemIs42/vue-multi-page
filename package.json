@@ -7,6 +7,7 @@
     "start": "npm run dev",
     "dev": "cross-env NODE_ENV=development node index",
     "build": "rm -rf dist && cross-env NODE_ENV=production node index",
+    "buildServer": "rm -rf dist && cross-env NODE_ENV=preview node index",
     "clean": "rm -rf dist"
   },
   "author": "Tianxin",

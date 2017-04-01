@@ -5,9 +5,11 @@ A project template for vue.js multiple pages bulid with webpack.
 ```shell
 npm/yarn install      # install
 
-npm run dev           # develop         http://localhost:8001
+npm run dev           # develop              http://localhost:8001
 
-npm run build         # build           http://localhost:9001
+npm run build         # build                http://localhost:9001
+
+npm run buildServer   # build with preview   http://localhost:9001
 ```
 
 ## Docker dev
