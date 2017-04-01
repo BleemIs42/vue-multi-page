@@ -15,5 +15,6 @@ RUN cd /usr/src && npm install --registry=http://registry.npm.taobao.org
 WORKDIR /usr/src/app
 
 EXPOSE 8001
+EXPOSE 9001
 
 CMD npm start
