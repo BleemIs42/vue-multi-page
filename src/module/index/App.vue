@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="bg">
     <vhead></vhead>
     <vindex></vindex>
-    <img src="../../assets/blue.jpg">
+    <!--<img src="../../assets/blue.jpg">-->
     <vfoot></vfoot>
   </div>
 </template>
@@ -23,5 +23,7 @@ export default {
 </script>
 
 <style>
-
+  .bg{
+    background-image:url(../../assets/blue.jpg);
+  }
 </style>

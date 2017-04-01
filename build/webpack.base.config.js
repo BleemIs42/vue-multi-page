@@ -73,7 +73,7 @@ export default {
             'process.env.NODE_ENV': JSON.stringify(config.env)
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
+            name: 'vendor/vendor'
         })
     ]
 }

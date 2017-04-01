@@ -24,7 +24,8 @@ const generateLoaders = loader => {
     if (isProduction) {
         return ExtractTextPlugin.extract({
             use: loaders,
-            fallback: 'vue-style-loader'
+            fallback: 'vue-style-loader',
+            publicPath: !config.build.publicPath ? '../../' : config.build.publicPath
         })
     } else {
         return ['vue-style-loader'].concat(loaders)
@@ -41,11 +42,11 @@ export const getEntries = (globPath) => {
     let entries = {}
     glob.sync(globPath).forEach(entry => {
         const basename = path.basename(entry, path.extname(entry))
-        // const tmp = entry.split('/').splice(-3)
-        // const pathname = tmp.splice(1, 1) + '/' + basename;
-        // entries[pathname] = entry
+        const tmp = entry.split('/').splice(-3)
+        const pathname = tmp.splice(1, 1) + '/' + basename;
+        entries[pathname] = entry
 
-        entries[basename] = entry
+        // entries[basename] = entry
     })
 
     return entries
@@ -63,7 +64,7 @@ export const htmlPlugins = (() => {
             favicon: getEntries(path.join(config.dev.srcRoot, 'assets/favicon.ico'))['assets/favicon'],
             chunks: Object.keys(pages).filter(item => {
                 return (item == page)
-            }).concat(['vendor'])
+            }).concat(['vendor/vendor'])
         }
         plugins.push(new HtmlWebpackPlugin(conf))
     }
