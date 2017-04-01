@@ -21,7 +21,7 @@ export default {
     build: {
         port: 9001,
         distRoot: path.resolve(__dirname, '../dist'),
-        // 空值使css文件里边的图片路径为 '../images/', 
+        // 空值使css文件里边的图片路径为 '../../images/', 
         // 有值替换为相应的值,配置见 utils.js
         publicPath: '' 
     }

@@ -21,13 +21,13 @@ export default () => {
     })
 
     
-    const app = new Koa()
-    app.use(server.static(path.resolve(__dirname, '../dist')))
+    // const app = new Koa()
+    // app.use(server.static(path.resolve(__dirname, '../dist')))
 
-    const port = config.build.port || 9000;
-    app.listen(port, () => {
-        console.log(`🌹  Listening at http://localhost:${port}`)
-        console.log(`🌹  Listening at http://${ip.address()}:${port}\n`)
-    })
+    // const port = config.build.port || 9000;
+    // app.listen(port, () => {
+    //     console.log(`🌹  Listening at http://localhost:${port}`)
+    //     console.log(`🌹  Listening at http://${ip.address()}:${port}\n`)
+    // })
 }
 
