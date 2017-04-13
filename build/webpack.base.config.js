@@ -29,7 +29,7 @@ export default {
                     loaders: cssLoaders,
                     postcss: [
                         px2rem({
-                            remUnit: 20
+                            remUnit: 40
                         }),
                         autoprefixer({
                             browsers: ['>1%']
