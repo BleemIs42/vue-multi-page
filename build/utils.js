@@ -35,7 +35,7 @@ const generateLoaders = loader => {
 export const cssLoaders = {
     css: generateLoaders(),
     postcss: generateLoaders(),
-    less: generateLoaders('sass')
+    less: generateLoaders('less')
 }
 
 export const getEntries = (globPath) => {

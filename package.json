@@ -6,14 +6,14 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "cross-env NODE_ENV=development node index",
-    "build": "rm -rf dist && cross-env NODE_ENV=production node index",
-    "buildServer": "rm -rf dist && cross-env NODE_ENV=preview node index",
+    "build": "rm -rf dist && NODE_ENV=production node index",
+    "buildServer": "rm -rf dist && NODE_ENV=preview node index",
     "clean": "rm -rf dist",
-    "dStart": "docker run -it -v ${PWD}:/usr/src/app -p 8000:8001 --name example  vue-multi-page",
+    "dStart": "docker run -it -rm -v ${PWD}:/usr/src/app -p 8000:8001 --name example  vue-multi-page",
     "dBuild": "docker exec example npm run build",
     "dBuildServer": "docker exec example npm run buildServer"
   },
-  "author": "Tianxin",
+  "author": "tianxin",
   "license": "ISC",
   "dependencies": {
     "vue": "^2.2.6",
