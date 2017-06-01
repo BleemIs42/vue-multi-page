@@ -23,9 +23,9 @@ export default () => {
                 changeOrigin: true,
                 logs: true
             }
-        } 
+        }
         console.log(`🌹  Proxy ${context} --> ${options.target}`)
-        
+
         app.use(proxy(context, options))
     })
 
@@ -47,10 +47,17 @@ export default () => {
     app.use(hotMiddlewareCompliler)
     app.use(devMiddlewareCompliler)
 
-    const port = config.dev.port || 8000;
-    app.listen(port, () => {
-        console.log(`\n🌹  Listening at http://localhost:${port}`)
-        console.log(`🌹  Listening at http://${ip.address()}:${port}\n`)
+    const port = config.dev.port || 8000
+    app.listen(port, err => {
+        if(err) {
+            console.log(err)
+            return 
+        }
+        
+        // devMiddlewareCompliler.waitUntilValid(() => {
+            console.log(`\n🌹  Listening at http://localhost:${port}`)
+            console.log(`🌹  Listening at http://${ip.address()}:${port}\n`)
+        // })
     })
 
     // webpack(devConfig, (err, stats) => {
